@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOMIA - Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .banner-section {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .video-banner {
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(45deg, #f093fb 0%, #f5576c 100%);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .video-placeholder {
+            color: white;
+            font-size: 1.5em;
+            text-align: center;
+            z-index: 2;
+        }
+
+        .video-banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="8" fill="white" opacity="0.3"/><polygon points="45,40 45,60 65,50" fill="white" opacity="0.8"/></svg>') center/80px no-repeat;
+            z-index: 1;
+        }
+
+        .assets-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .asset-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .asset-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        .asset-placeholder {
+            width: 100%;
+            height: 150px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            margin-bottom: 15px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .asset-placeholder::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255,255,255,0.1);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+
+        .asset-card:hover .asset-placeholder::before {
+            transform: translateX(100%);
+        }
+
+        .asset-title {
+            font-size: 1.1em;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .asset-description {
+            color: #666;
+            font-size: 0.9em;
+            line-height: 1.4;
+        }
+
+        .whatsapp-card {
+            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+            color: white;
+            border: none;
+            box-shadow: 0 8px 20px rgba(37, 211, 102, 0.3);
+            animation: pulse 2s infinite;
+        }
+
+        .whatsapp-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(37, 211, 102, 0.4);
+        }
+
+        .whatsapp-placeholder {
+            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+            font-size: 3em;
+            position: relative;
+        }
+
+        .whatsapp-placeholder::after {
+            content: '+';
+            position: absolute;
+            top: -10px;
+            right: 10px;
+            font-size: 1.5em;
+            background: #fff;
+            color: #25D366;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .whatsapp-card .asset-title {
+            color: white;
+            font-weight: bold;
+        }
+
+        .whatsapp-card .asset-description {
+            color: rgba(255,255,255,0.9);
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 8px 20px rgba(37, 211, 102, 0.3); }
+            50% { box-shadow: 0 8px 25px rgba(37, 211, 102, 0.5); }
+            100% { box-shadow: 0 8px 20px rgba(37, 211, 102, 0.3); }
+        }
+
+        .load-instructions {
+            background: #f8f9fa;
+            border: 2px dashed #dee2e6;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            color: #495057;
+        }
+
+        .load-instructions h3 {
+            color: #495057;
+            margin-bottom: 15px;
+        }
+
+        .load-instructions ol {
+            margin-left: 20px;
+        }
+
+        .load-instructions li {
+            margin-bottom: 8px;
+        }
+
+        .footer {
+            text-align: center;
+            color: white;
+            margin-top: 40px;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .video-banner {
+                height: 250px;
+            }
+            
+            .assets-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>DOMIA</h1>
+            <p>Soluciones Inteligentes de Automatización</p>
+            <div style="max-width: 800px; margin: 20px auto; font-size: 1.1em; line-height: 1.6; opacity: 0.95;">
+                DOMIA es una empresa innovadora especializada en inteligencia artificial y automatización digital. 
+                Desarrollamos bots futuristas con identidad caribeña que transforman la experiencia del usuario, 
+                ofreciendo soluciones personalizadas para empresas que buscan optimizar sus procesos mediante 
+                tecnología de vanguardia. Nuestro enfoque combina la eficiencia de la IA con el carisma y 
+                la creatividad de nuestra cultura, creando herramientas que no solo funcionan, sino que conectan.
+            </div>
+        </div>
+
+        <div class="banner-section">
+            <div class="video-banner" id="videoBanner">
+                <div class="video-placeholder">
+                    <div>🎬 Video Banner Principal</div>
+                    <div style="font-size: 0.8em; margin-top: 10px;">domia-demo.mp4</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="assets-grid">
+            <div class="asset-card">
+                <div class="asset-placeholder">
+                    <span>🤖 API</span>
+                </div>
+                <div class="asset-title">API Icon</div>
+                <div class="asset-description">Conexión inteligente para integrar nuestros bots en cualquier plataforma</div>
+            </div>
+
+            <div class="asset-card">
+                <div class="asset-placeholder">
+                    <span>🤖 BOT</span>
+                </div>
+                <div class="asset-title">Bot Icon</div>
+                <div class="asset-description">Nuestros asistentes IA con personalidad caribeña única</div>
+            </div>
+
+            <div class="asset-card">
+                <div class="asset-placeholder">
+                    <span>📱 BANNER</span>
+                </div>
+                <div class="asset-title">DOMIA Brand</div>
+                <div class="asset-description">Identidad visual que representa innovación y tecnología del futuro</div>
+            </div>
+
+            <div class="asset-card">
+                <div class="asset-placeholder">
+                    <span>🛒 SHOP</span>
+                </div>
+                <div class="asset-title">E-Commerce Solutions</div>
+                <div class="asset-description">Automatización inteligente para tiendas online y comercio digital</div>
+            </div>
+
+            <div class="asset-card">
+                <div class="asset-placeholder">
+                    <span>📞 VOIP</span>
+                </div>
+                <div class="asset-title">VoIP Integration</div>
+                <div class="asset-description">Comunicaciones inteligentes con asistentes de voz automatizados</div>
+            </div>
+
+            <div class="asset-card">
+                <div class="asset-placeholder">
+                    <span>🎬 VIDEO</span>
+                </div>
+                <div class="asset-title">Demo Experience</div>
+                <div class="asset-description">Descubre cómo nuestros bots transforman la experiencia digital</div>
+            </div>
+
+            <div class="asset-card whatsapp-card" onclick="openWhatsApp()">
+                <div class="asset-placeholder whatsapp-placeholder">
+                    <span>💬</span>
+                </div>
+                <div class="asset-title">Contacto WhatsApp</div>
+                <div class="asset-description">¡Habla con nosotros directamente! Consulta sobre nuestros servicios de IA</div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>&copy; 2025 DOMIA - Todos los derechos reservados</p>
+        </div>
+    </div>
+
+    <script>
+        // Función para abrir WhatsApp
+        function openWhatsApp() {
+            const phoneNumber = '18099297296';
+            const message = encodeURIComponent('¡Hola DOMIA! Me interesa conocer más sobre sus soluciones de IA y automatización.');
+            const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
+            window.open(whatsappUrl, '_blank');
+        }
+
+        // Función para cargar archivos reales cuando estén disponibles
+        function loadAssets() {
+            const assets = [
+                {id: 'api', file: 'api-icon.png', type: 'image'},
+                {id: 'bot', file: 'bot-icon.png', type: 'image'},
+                {id: 'banner', file: 'domia-banner.png', type: 'image'},
+                {id: 'shop', file: 'shop-icon.png', type: 'image'},
+                {id: 'voip', file: 'voip-icon.png', type: 'image'}
+            ];
+
+            // Cargar video principal del banner
+            const videoBanner = document.getElementById('videoBanner');
+            const video = document.createElement('video');
+            video.src = 'assets/domia-demo.mp4';
+            video.controls = true;
+            video.autoplay = true;
+            video.muted = true;
+            video.loop = true;
+            video.style.width = '100%';
+            video.style.height = '100%';
+            video.style.objectFit = 'cover';
+            video.style.borderRadius = '15px';
+            
+            // Reemplazar placeholder con video real
+            video.addEventListener('loadeddata', function() {
+                videoBanner.innerHTML = '';
+                videoBanner.appendChild(video);
+            });
+
+            // Cargar imágenes
+            assets.forEach((asset, index) => {
+                const img = new Image();
+                img.src = `assets/${asset.file}`;
+                img.onload = function() {
+                    const placeholder = document.querySelectorAll('.asset-placeholder')[index];
+                    placeholder.style.backgroundImage = `url(assets/${asset.file})`;
+                    placeholder.style.backgroundSize = 'cover';
+                    placeholder.style.backgroundPosition = 'center';
+                    placeholder.innerHTML = '';
+                };
+            });
+
+            // Cargar video de la tarjeta "Demo Experience"
+            const demoVideo = document.createElement('video');
+            demoVideo.src = 'assets/demo-experience.mp4';
+            demoVideo.controls = true;
+            demoVideo.muted = true;
+            demoVideo.style.width = '100%';
+            demoVideo.style.height = '100%';
+            demoVideo.style.objectFit = 'cover';
+            demoVideo.style.borderRadius = '10px';
+            
+            demoVideo.addEventListener('loadeddata', function() {
+                const demoPlaceholder = document.querySelectorAll('.asset-placeholder')[5];
+                demoPlaceholder.innerHTML = '';
+                demoPlaceholder.appendChild(demoVideo);
+            });
+        }
+
+        // Cargar assets cuando la página esté lista
+        document.addEventListener('DOMContentLoaded', loadAssets);
+    </script>
+</body>
+</html>
